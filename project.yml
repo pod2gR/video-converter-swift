@@ -1,0 +1,38 @@
+name: VideoConverter
+options:
+  bundleIdPrefix: com.videoconverter
+  deploymentTarget:
+    macOS: "13.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "13.0"
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    ENABLE_HARDENED_RUNTIME: YES
+
+targets:
+  VideoConverter:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/VideoConverter
+        excludes:
+          - "**/.build/**"
+          - "**/.swiftpm/**"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.videoconverter.app
+        INFOPLIST_FILE: Sources/VideoConverter/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Sources/VideoConverter/VideoConverter.entitlements
+        PRODUCT_NAME: VideoConverter
+        COMBINE_HIDPI_IMAGES: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    entitlements:
+      path: Sources/VideoConverter/VideoConverter.entitlements
+      properties:
+        com.apple.security.app-sandbox: false
+        com.apple.security.files.user-selected.read-write: true

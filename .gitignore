@@ -1,0 +1,38 @@
+# Xcode / Swift
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+
+# Xcode user settings
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+
+# Workspace
+*.xcworkspace/xcuserdata
+
+# Build products
+dist/
+*.app
+*.app.zip
+
+# IDEs
+.vscode/
+.idea/
+.codegraph/
+
+# macOS
+.DS_Store
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Env / secrets
+.env
+.env.*
+
+# Misc
+*.iml
