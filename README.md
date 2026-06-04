@@ -4,7 +4,7 @@
 
 ![macOS](https://img.shields.io/badge/platform-macOS-lightgrey) ![Swift](https://img.shields.io/badge/language-Swift-orange) ![License](https://img.shields.io/badge/license-MIT-blue)
 
-[中文 README](README-zh.md)
+[中文介绍](README-zh.md)
 
 ## Overview
 
