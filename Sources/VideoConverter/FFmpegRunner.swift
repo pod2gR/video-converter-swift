@@ -209,7 +209,7 @@ final class FFmpegRunner: @unchecked Sendable {
                         )
                         let shortError =
                             extractFFmpegError(from: stderrText)
-                            ?? "FFmpeg 异常退出 (code: \(process.terminationStatus))"
+                            ?? "FFmpeg 异常退出 (code: %d)".localized(process.terminationStatus)
                         completion(false, shortError)
                     }
                 }

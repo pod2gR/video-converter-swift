@@ -7,7 +7,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             // 标题
             HStack {
-                Text("编码设置")
+                Text("编码设置".localized)
                     .font(.title2.bold())
                 Spacer()
             }
@@ -19,26 +19,26 @@ struct SettingsView: View {
                 VStack(spacing: 24) {
                     // 分辨率选择
                     settingsSection(
-                        title: "分辨率", systemImage: "rectangle.arrowtriangle.2.outward"
+                        title: "分辨率".localized, systemImage: "rectangle.arrowtriangle.2.outward"
                     ) {
                         VStack(alignment: .leading, spacing: 4) {
                             RadioOption(
-                                title: "保持原分辨率",
+                                title: ResolutionOption.original.title,
                                 isSelected: appState.settings.resolution == .original,
                                 action: { appState.settings.resolution = .original }
                             )
                             RadioOption(
-                                title: "1080p",
+                                title: ResolutionOption.p1080.title,
                                 isSelected: appState.settings.resolution == .p1080,
                                 action: { appState.settings.resolution = .p1080 }
                             )
                             RadioOption(
-                                title: "720p",
+                                title: ResolutionOption.p720.title,
                                 isSelected: appState.settings.resolution == .p720,
                                 action: { appState.settings.resolution = .p720 }
                             )
                             RadioOption(
-                                title: "480p",
+                                title: ResolutionOption.p480.title,
                                 isSelected: appState.settings.resolution == .p480,
                                 action: { appState.settings.resolution = .p480 }
                             )
@@ -46,30 +46,30 @@ struct SettingsView: View {
                     }
 
                     // 帧率选择
-                    settingsSection(title: "帧率", systemImage: "speedometer") {
+                    settingsSection(title: "帧率".localized, systemImage: "speedometer") {
                         VStack(alignment: .leading, spacing: 4) {
                             RadioOption(
-                                title: "保持原帧率",
+                                title: FrameRateOption.original.title,
                                 isSelected: appState.settings.frameRate == .original,
                                 action: { appState.settings.frameRate = .original }
                             )
                             RadioOption(
-                                title: "60 fps",
+                                title: FrameRateOption.fps60.title,
                                 isSelected: appState.settings.frameRate == .fps60,
                                 action: { appState.settings.frameRate = .fps60 }
                             )
                             RadioOption(
-                                title: "30 fps",
+                                title: FrameRateOption.fps30.title,
                                 isSelected: appState.settings.frameRate == .fps30,
                                 action: { appState.settings.frameRate = .fps30 }
                             )
                             RadioOption(
-                                title: "29.97 fps",
+                                title: FrameRateOption.fps29_97.title,
                                 isSelected: appState.settings.frameRate == .fps29_97,
                                 action: { appState.settings.frameRate = .fps29_97 }
                             )
                             RadioOption(
-                                title: "24 fps",
+                                title: FrameRateOption.fps24.title,
                                 isSelected: appState.settings.frameRate == .fps24,
                                 action: { appState.settings.frameRate = .fps24 }
                             )
@@ -77,27 +77,28 @@ struct SettingsView: View {
                     }
 
                     // 压缩比例（H.264 → H.265，根据原码率自动换算）
-                    settingsSection(title: "压缩比例", systemImage: "arrow.up.arrow.down") {
+                    settingsSection(title: "压缩比例".localized, systemImage: "arrow.up.arrow.down") {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(
                                 "自动探测原视频码率，H.265 同画质约需 H.264 一半码率。所有模式均启用 -prio_speed 0 + -spatial_aq 1 质量旗标。"
+                                    .localized
                             )
                             .font(.caption)
                             .foregroundColor(.secondary)
 
                             VStack(alignment: .leading, spacing: 4) {
                                 RadioOption(
-                                    title: "高质量 — 目标码率 = 原码率 × 65%",
+                                    title: appState.settings.crf.title,
                                     isSelected: appState.settings.crf == .qualityCompress,
                                     action: { appState.settings.crf = .qualityCompress }
                                 )
                                 RadioOption(
-                                    title: "标准压缩（推荐）— 目标码率 = 原码率 × 50%",
+                                    title: appState.settings.crf.title,
                                     isSelected: appState.settings.crf == .standardCompress,
                                     action: { appState.settings.crf = .standardCompress }
                                 )
                                 RadioOption(
-                                    title: "强力压缩 — 目标码率 = 原码率 × 35%",
+                                    title: appState.settings.crf.title,
                                     isSelected: appState.settings.crf == .strongCompress,
                                     action: { appState.settings.crf = .strongCompress }
                                 )
@@ -106,8 +107,8 @@ struct SettingsView: View {
                     }
 
                     // 输出设置
-                    settingsSection(title: "输出", systemImage: "folder") {
-                        Toggle("输出到子目录 \"new\"", isOn: $appState.settings.outputSubdir)
+                    settingsSection(title: "输出".localized, systemImage: "folder") {
+                        Toggle("输出到子目录 \"new\"".localized, isOn: $appState.settings.outputSubdir)
                             .toggleStyle(.switch)
                     }
                 }
@@ -121,7 +122,7 @@ struct SettingsView: View {
                 Button(action: {
                     appState.currentPage = .select
                 }) {
-                    Label("上一步", systemImage: "chevron.left")
+                    Label("上一步".localized, systemImage: "chevron.left")
                 }
                 .buttonStyle(.borderless)
 
@@ -131,7 +132,7 @@ struct SettingsView: View {
                     appState.currentPage = .progress
                     startEncoding()
                 }) {
-                    Label("开始转码", systemImage: "arrow.right")
+                    Label("开始转码".localized, systemImage: "arrow.right")
                 }
                 .buttonStyle(.borderedProminent)
             }

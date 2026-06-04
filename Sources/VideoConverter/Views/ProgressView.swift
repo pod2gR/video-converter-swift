@@ -8,14 +8,14 @@ struct ProgressView: View {
         VStack(spacing: 0) {
             // 标题栏
             HStack {
-                Text("转码进度")
+                Text("转码进度".localized)
                     .font(.title2.bold())
                 Spacer()
 
                 // 屏幕常亮勾选框
                 if appState.isEncoding || appState.isPaused {
                     Toggle(isOn: $appState.keepScreenOn) {
-                        Text("屏幕常亮")
+                        Text("屏幕常亮".localized)
                             .font(.subheadline)
                     }
                     .toggleStyle(.checkbox)
@@ -77,10 +77,10 @@ struct ProgressView: View {
             Image(systemName: "gearshape.2")
                 .font(.system(size: 36))
                 .foregroundColor(.secondary)
-            Text("准备开始转码")
+            Text("准备开始转码".localized)
                 .font(.title3)
                 .foregroundColor(.secondary)
-            Text("点击\"开始转码\"启动处理")
+            Text("点击\"开始转码\"启动处理".localized)
                 .font(.caption)
                 .foregroundColor(.secondary)
             Spacer()
@@ -91,7 +91,7 @@ struct ProgressView: View {
     private var overallProgressCard: some View {
         VStack(spacing: 12) {
             HStack {
-                Label("总体进度", systemImage: "arrow.triangle.2.circlepath")
+                Label("总体进度".localized, systemImage: "arrow.triangle.2.circlepath")
                     .foregroundColor(.secondary)
                 Spacer()
                 Text("\(overallProgressPercent)%")
@@ -104,19 +104,22 @@ struct ProgressView: View {
                 .tint(.accentColor)
 
             HStack {
-                Text("已完成 \(appState.progress.completedFiles) / \(appState.progress.totalFiles) 个")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                Text(
+                    "已完成 %d / %d 个".localized(
+                        appState.progress.completedFiles, appState.progress.totalFiles)
+                )
+                .foregroundColor(.secondary)
                 Spacer()
             }
 
             HStack(spacing: 16) {
                 Label(
-                    "已进行 \(formatTime(appState.progress.totalElapsedSoFar))", systemImage: "clock"
+                    "已进行 %@".localized(formatTime(appState.progress.totalElapsedSoFar)),
+                    systemImage: "clock"
                 )
                 .font(.caption)
                 .foregroundColor(.secondary)
-                Label("预计剩余 \(formatTime(estimatedRemaining))", systemImage: "hourglass")
+                Label("预计剩余 %@".localized(formatTime(estimatedRemaining)), systemImage: "hourglass")
                     .font(.caption)
                     .foregroundColor(.secondary)
                 Spacer()
@@ -130,7 +133,7 @@ struct ProgressView: View {
     private var currentFileCard: some View {
         VStack(spacing: 10) {
             HStack {
-                Label("当前文件", systemImage: "doc.on.doc")
+                Label("当前文件".localized, systemImage: "doc.on.doc")
                     .foregroundColor(.secondary)
                 Spacer()
                 Text("\(appState.progress.currentFileIndex + 1)/\(appState.progress.totalFiles)")
@@ -161,7 +164,7 @@ struct ProgressView: View {
                 if appState.progress.currentFileProgress > 0 {
                     Text("•")
                         .foregroundColor(.secondary)
-                    Text("剩余 \(formatTime(estimatedFileRemaining))")
+                    Text("剩余 %@".localized(formatTime(estimatedFileRemaining)))
                         .font(.caption.monospaced())
                         .foregroundColor(.secondary)
                 }
@@ -175,7 +178,7 @@ struct ProgressView: View {
 
     private func errorCard(_ error: String) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            Label("转码出错", systemImage: "exclamationmark.triangle.fill")
+            Label("转码出错".localized, systemImage: "exclamationmark.triangle.fill")
                 .foregroundColor(.red)
             Text(error)
                 .font(.caption)
@@ -191,7 +194,8 @@ struct ProgressView: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Label(
-                    "已完成 (\(appState.completedFiles.count))", systemImage: "checkmark.circle.fill"
+                    "已完成 (%d)".localized(appState.completedFiles.count),
+                    systemImage: "checkmark.circle.fill"
                 )
                 .foregroundColor(.green)
                 Spacer()
@@ -243,7 +247,7 @@ struct ProgressView: View {
                     appState.currentPage = .settings
                 }
             }) {
-                Label("上一步", systemImage: "arrow.left")
+                Label("上一步".localized, systemImage: "arrow.left")
             }
             .buttonStyle(.borderless)
 
@@ -260,7 +264,7 @@ struct ProgressView: View {
                     }
                 }) {
                     Label(
-                        appState.isPaused ? "继续转码" : "暂停转码",
+                        appState.isPaused ? "继续转码".localized : "暂停转码".localized,
                         systemImage: appState.isPaused ? "play.fill" : "pause.fill")
                 }
                 .buttonStyle(.borderedProminent)
@@ -270,7 +274,7 @@ struct ProgressView: View {
                     FFmpegRunner.shared.pause()
                     saveProgressAndStop()
                 }) {
-                    Label("停止", systemImage: "stop.fill")
+                    Label("停止".localized, systemImage: "stop.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
@@ -281,7 +285,7 @@ struct ProgressView: View {
                     appState.reset()
                     appState.currentPage = .select
                 }) {
-                    Label("完成", systemImage: "checkmark")
+                    Label("完成".localized, systemImage: "checkmark")
                 }
                 .buttonStyle(.borderedProminent)
             }
@@ -328,7 +332,7 @@ struct ProgressView: View {
         let totalOutput = appState.completedFiles.reduce(0) { $0 + $1.outputSize }
         guard totalOriginal > 0 else { return "" }
         let ratio = Double(totalOutput) / Double(totalOriginal)
-        return "平均压缩至 \(Int(ratio * 100))%"
+        return "平均压缩至 %d%%".localized(Int(ratio * 100))
     }
 
     private func formatTime(_ interval: TimeInterval) -> String {
@@ -362,11 +366,11 @@ struct ProgressView: View {
 
         // 弹出确认退出对话框
         let alert = NSAlert()
-        alert.messageText = "确认退出"
-        alert.informativeText = "当前正在转码的文件将被中断，已完成部分会被丢弃。\n已完成的文件不受影响。\n确定要退出程序吗？"
+        alert.messageText = "确认退出".localized
+        alert.informativeText = "当前正在转码的文件将被中断，已完成部分会被丢弃。\n已完成的文件不受影响。\n确定要退出程序吗？".localized
         alert.alertStyle = .warning
-        alert.addButton(withTitle: "退出")
-        alert.addButton(withTitle: "取消")
+        alert.addButton(withTitle: "退出".localized)
+        alert.addButton(withTitle: "取消".localized)
 
         let response = alert.runModal()
         if response == .alertFirstButtonReturn {
@@ -385,9 +389,7 @@ struct ProgressView: View {
 // MARK: - 暂停状态徽章
 struct PausedBadge: View {
     var body: some View {
-        Label("已暂停", systemImage: "pause.circle.fill")
-            .font(.subheadline)
-            .foregroundColor(.orange)
+        Label("已暂停".localized, systemImage: "pause.circle.fill")
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
             .background(Color.orange.opacity(0.15))

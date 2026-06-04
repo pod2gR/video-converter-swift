@@ -27,13 +27,8 @@ struct SelectView: View {
                     .font(.system(size: 48))
                     .foregroundColor(.secondary)
 
-                Text("选择包含视频文件的文件夹")
-                    .font(.title3)
-                    .foregroundColor(.primary)
-            }
-
-            Button(action: { openFolderPicker() }) {
-                Label("选择文件夹", systemImage: "folder")
+                Text("选择包含视频文件的文件夹".localized)
+                Label("选择文件夹".localized, systemImage: "folder")
             }
             .buttonStyle(.borderedProminent)
 
@@ -53,7 +48,7 @@ struct SelectView: View {
                     .progressViewStyle(.circular)
                     .scaleEffect(1.5)
 
-                Text("正在扫描文件夹...")
+                Text("正在扫描文件夹...".localized)
                     .font(.headline)
 
                 Text(appState.selectedFolder?.path ?? "")
@@ -64,7 +59,7 @@ struct SelectView: View {
                     .frame(maxWidth: 400)
 
                 if appState.videoFiles.count > 0 {
-                    Text("已找到 \(appState.videoFiles.count) 个视频文件")
+                    Text("已找到 %d 个视频文件".localized(appState.videoFiles.count))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -86,10 +81,10 @@ struct SelectView: View {
                 Text(appState.selectedFolder?.lastPathComponent ?? "")
                     .font(.headline)
                 Spacer()
-                Text("\(appState.videoFiles.count) 个待转码")
+                Text("%d 个待转码".localized(appState.videoFiles.count))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                Button("更换文件夹") {
+                Button("更换文件夹".localized) {
                     appState.selectedFolder = nil
                     appState.videoFiles = []
                 }
@@ -130,7 +125,7 @@ struct SelectView: View {
                 Button(action: {
                     appState.currentPage = .settings
                 }) {
-                    Label("编码设置", systemImage: "arrow.right")
+                    Label("编码设置".localized, systemImage: "arrow.right")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(appState.videoFiles.isEmpty)
@@ -147,8 +142,8 @@ struct SelectView: View {
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = false
         panel.canCreateDirectories = false
-        panel.title = "选择包含视频文件的文件夹"
-        panel.prompt = "选择"
+        panel.title = "选择包含视频文件的文件夹".localized
+        panel.prompt = "选择".localized
 
         panel.begin { response in
             if response == .OK, let url = panel.url {

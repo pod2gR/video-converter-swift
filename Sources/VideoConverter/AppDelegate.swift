@@ -92,11 +92,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func showFFmpegNotFoundAlert() {
         let alert = NSAlert()
-        alert.messageText = "未找到 FFmpeg"
+        alert.messageText = "未找到 FFmpeg".localized
         alert.informativeText =
             "Video Converter 需要 FFmpeg 来进行视频转码。请通过 Homebrew 安装：\n\nbrew install ffmpeg\n\n安装完成后请重新启动程序。"
+            .localized
         alert.alertStyle = .critical
-        alert.addButton(withTitle: "确定")
+        alert.addButton(withTitle: "确定".localized)
 
         if let window = self.window {
             alert.beginSheetModal(for: window) { _ in
@@ -131,41 +132,43 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         appMenuItem.submenu = appMenu
 
         appMenu.addItem(
-            withTitle: "关于 Video Converter",
+            withTitle: "关于 Video Converter".localized,
             action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
         appMenu.addItem(NSMenuItem.separator())
         appMenu.addItem(
-            withTitle: "退出", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+            withTitle: "退出".localized, action: #selector(NSApplication.terminate(_:)),
+            keyEquivalent: "q")
 
         // 文件菜单
         let fileMenuItem = NSMenuItem()
         mainMenu.addItem(fileMenuItem)
 
-        let fileMenu = NSMenu(title: "文件")
+        let fileMenu = NSMenu(title: "文件".localized)
         fileMenuItem.submenu = fileMenu
 
         fileMenu.addItem(
-            withTitle: "打开文件夹...", action: #selector(openFolder(_:)), keyEquivalent: "o")
+            withTitle: "打开文件夹...".localized, action: #selector(openFolder(_:)), keyEquivalent: "o")
 
         // 编辑菜单
         let editMenuItem = NSMenuItem()
         mainMenu.addItem(editMenuItem)
 
-        let editMenu = NSMenu(title: "编辑")
+        let editMenu = NSMenu(title: "编辑".localized)
         editMenuItem.submenu = editMenu
 
         editMenu.addItem(
-            withTitle: "最小化", action: #selector(NSWindow.miniaturize(_:)), keyEquivalent: "m")
+            withTitle: "最小化".localized, action: #selector(NSWindow.miniaturize(_:)),
+            keyEquivalent: "m")
 
         // 窗口菜单
         let windowMenuItem = NSMenuItem()
         mainMenu.addItem(windowMenuItem)
 
-        let windowMenu = NSMenu(title: "窗口")
+        let windowMenu = NSMenu(title: "窗口".localized)
         windowMenuItem.submenu = windowMenu
 
         windowMenu.addItem(
-            withTitle: "关闭", action: #selector(NSWindow.close), keyEquivalent: "w")
+            withTitle: "关闭".localized, action: #selector(NSWindow.close), keyEquivalent: "w")
 
         NSApplication.shared.mainMenu = mainMenu
     }

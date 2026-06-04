@@ -13,10 +13,19 @@ struct VideoFile: Identifiable, Equatable {
 }
 
 enum ResolutionOption: String, CaseIterable {
-    case original = "保持原分辨率"
-    case p1080 = "1080p"
-    case p720 = "720p"
-    case p480 = "480p"
+    case original
+    case p1080
+    case p720
+    case p480
+
+    var title: String {
+        switch self {
+        case .original: return "保持原分辨率".localized
+        case .p1080: return "1080p"
+        case .p720: return "720p"
+        case .p480: return "480p"
+        }
+    }
 
     var scaleValue: String? {
         switch self {
@@ -29,11 +38,21 @@ enum ResolutionOption: String, CaseIterable {
 }
 
 enum FrameRateOption: String, CaseIterable {
-    case original = "保持原帧率"
-    case fps60 = "60"
-    case fps30 = "30"
-    case fps29_97 = "29.97"
-    case fps24 = "24"
+    case original
+    case fps60
+    case fps30
+    case fps29_97
+    case fps24
+
+    var title: String {
+        switch self {
+        case .original: return "保持原帧率".localized
+        case .fps60: return "60 fps"
+        case .fps30: return "30 fps"
+        case .fps29_97: return "29.97 fps"
+        case .fps24: return "24 fps"
+        }
+    }
 
     var fpsValue: String? {
         switch self {
@@ -47,9 +66,17 @@ enum FrameRateOption: String, CaseIterable {
 }
 
 enum CRFOption: String, CaseIterable {
-    case qualityCompress = "高质量压缩（原码率 65%）"
-    case standardCompress = "标准压缩（原码率 50%）"
-    case strongCompress = "强力压缩（原码率 35%）"
+    case qualityCompress
+    case standardCompress
+    case strongCompress
+
+    var title: String {
+        switch self {
+        case .qualityCompress: return "高质量压缩（原码率 65%）".localized
+        case .standardCompress: return "标准压缩（原码率 50%）".localized
+        case .strongCompress: return "强力压缩（原码率 35%）".localized
+        }
+    }
 
     /// H.265 目标码率占原码率的比例（H.265 比 H.264 效率高约 40-50%，同画质只需一半码率）
     var bitrateRatio: Double {
@@ -130,9 +157,9 @@ class AppState: ObservableObject {
 
         var title: String {
             switch self {
-            case .select: return "选择文件夹"
-            case .settings: return "编码设置"
-            case .progress: return "转码进度"
+            case .select: return "选择文件夹".localized
+            case .settings: return "编码设置".localized
+            case .progress: return "转码进度".localized
             }
         }
     }
