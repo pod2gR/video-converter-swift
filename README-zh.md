@@ -56,3 +56,7 @@ xcodebuild -project VideoConverter.xcodeproj -scheme VideoConverter -configurati
 ---
 
 更多信息请查看仓库的 Issues 和 Releases 页面，下载最新的打包版本开始使用。
+
+---
+
+mac 视频转换器, macOS 视频转码, 视频压缩 mac, FFmpeg mac GUI, Swift 视频转换, HEVC 转码, H.264 转换 mac, 硬件加速转码
