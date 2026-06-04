@@ -4,60 +4,60 @@
 
 ![macOS](https://img.shields.io/badge/platform-macOS-lightgrey) ![Swift](https://img.shields.io/badge/language-Swift-orange) ![License](https://img.shields.io/badge/license-MIT-blue)
 
-## 简介
+[中文 README](README-zh.md)
 
-- Video Converter 是一款用 Swift 原生开发的 macOS 应用，针对需要在 Mac 上快速进行视频转码、压缩和体积优化的用户。
-- 关键场景：快速将视频转为 H.264/H.265（HEVC）、调整比特率、压缩以便上传或节省存储空间。
+## Overview
 
-## 功能特点
+- Video Converter is a native macOS app built with Swift for fast video transcoding, compression, and size optimization on Mac.
+- Key scenarios: quickly convert videos to H.264/H.265 (HEVC), adjust bitrate, and compress files for upload or storage savings.
 
+## Features
 
-极简、轻量、快速：原生 Swift + 硬件加速，分钟级完成大文件转码。
+Minimal, lightweight, and fast: native Swift plus hardware acceleration to transcode large files in minutes.
 
-- **Swift 原生开发**：内建为 macOS 桌面应用，界面响应快速、系统集成友好。
-- **体积极小**：不臃肿的二进制体积，启动迅速。
-- **硬件加速**：支持 macOS 硬件转码加速（若系统/FFmpeg 支持），速度显著优于纯软件转码。
-- **易用**：拖拽或命令行模式，适配批量处理场景。
-- **基于 FFmpeg**：利用成熟的转码库实现可靠的视频编码/封装。
+- **Native Swift macOS app**: designed for desktop performance, responsive UI, and tight system integration.
+- **Small binary**: lightweight executable with fast startup.
+- **Hardware acceleration**: supports macOS hardware encoding acceleration when available via the system or FFmpeg.
+- **Easy to use**: drag-and-drop and CLI-friendly workflow for batch processing.
+- **Powered by FFmpeg**: uses a proven transcoding engine for reliable video encoding and packaging.
 
+## Installation & Build
 
-安装与构建
-要求：macOS、Xcode 或 Swift 工具链、可选的 `xcodegen`（若使用 `project.yml` 生成 Xcode 项目）。
+Requirements: macOS, Xcode or Swift toolchain, optional `xcodegen` if you want to generate the project from `project.yml`.
 
-快速构建（Swift Package）：
+Build quickly with Swift Package Manager:
 
 ```bash
 swift build
 ```
 
-通过 Xcode 打包（使用 xcodegen 生成工程）：
+Build with Xcode (using xcodegen):
 
 ```bash
 xcodegen generate
 xcodebuild -project VideoConverter.xcodeproj -scheme VideoConverter -configuration Release build
 ```
 
-运行已打包应用（本仓库的发行版）：
+Run the packaged app from the Releases section:
 
-1. 下载 Release 中的 `VideoConverter.app.zip` 并解压。
-2. 双击 `VideoConverter.app` 启动。
+1. Download `VideoConverter.app.zip` from the release.
+2. Unzip and open `VideoConverter.app`.
 
-命令行（FFmpeg）
+## FFmpeg
 
-- 本项目在内部使用 `FFmpeg`（或打包的二进制）执行实际转码；请确保系统上可用 `ffmpeg`，或在设置中指定 FFmpeg 路径。
+- The app uses `FFmpeg` internally for actual transcoding. Make sure `ffmpeg` is available on your system or set the FFmpeg path in the app settings.
 
-贡献
+## Contributing
 
-- 欢迎提 issue、PR 和建议。若要贡献代码，请先 fork 本仓库并发起 PR。
+- Issues, PRs, and suggestions are welcome. Please fork the repository and open a pull request.
 
-许可证
+## License
 
 - MIT
 
 ---
 
-更多信息请查看仓库的 Issues 和 Releases 页面，下载最新的打包版本开始使用。
-
+For more information, check the repository Issues and Releases pages to download the latest packaged version.
 
 ---
 
