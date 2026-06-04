@@ -75,7 +75,8 @@ struct Localization {
         "编辑": "Edit",
         "窗口": "Window",
         "FFmpeg 异常退出 (code: %d)": "FFmpeg exited with code %d",
-        "自动探测原视频码率，H.265 同画质约需 H.264 一半码率。所有模式均启用 -prio_speed 0 + -spatial_aq 1 质量旗标。": "Auto-detect the original bitrate. H.265 needs about half the bitrate of H.264 at the same quality. All modes enable -prio_speed 0 + -spatial_aq 1 for quality.",
+        "自动探测原视频码率，H.265 同画质约需 H.264 一半码率。所有模式均启用 -prio_speed 0 + -spatial_aq 1 质量旗标。":
+            "Auto-detect the original bitrate. H.265 needs about half the bitrate of H.264 at the same quality. All modes enable -prio_speed 0 + -spatial_aq 1 for quality.",
         "确定": "OK",
         "保持原帧率": "Keep original frame rate",
     ]
