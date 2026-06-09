@@ -88,17 +88,17 @@ struct SettingsView: View {
 
                             VStack(alignment: .leading, spacing: 4) {
                                 RadioOption(
-                                    title: appState.settings.crf.title,
+                                    title: CRFOption.qualityCompress.title,
                                     isSelected: appState.settings.crf == .qualityCompress,
                                     action: { appState.settings.crf = .qualityCompress }
                                 )
                                 RadioOption(
-                                    title: appState.settings.crf.title,
+                                    title: CRFOption.standardCompress.title,
                                     isSelected: appState.settings.crf == .standardCompress,
                                     action: { appState.settings.crf = .standardCompress }
                                 )
                                 RadioOption(
-                                    title: appState.settings.crf.title,
+                                    title: CRFOption.strongCompress.title,
                                     isSelected: appState.settings.crf == .strongCompress,
                                     action: { appState.settings.crf = .strongCompress }
                                 )

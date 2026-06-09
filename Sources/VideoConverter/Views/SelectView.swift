@@ -3,7 +3,6 @@ import SwiftUI
 
 struct SelectView: View {
     @EnvironmentObject var appState: AppState
-    @State private var showingFolderPicker = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -28,6 +27,13 @@ struct SelectView: View {
                     .foregroundColor(.secondary)
 
                 Text("选择包含视频文件的文件夹".localized)
+                    .font(.title3)
+                    .foregroundColor(.primary)
+            }
+
+            Button {
+                openFolderPicker()
+            } label: {
                 Label("选择文件夹".localized, systemImage: "folder")
             }
             .buttonStyle(.borderedProminent)
@@ -85,8 +91,7 @@ struct SelectView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 Button("更换文件夹".localized) {
-                    appState.selectedFolder = nil
-                    appState.videoFiles = []
+                    openFolderPicker()
                 }
                 .buttonStyle(.link)
             }
