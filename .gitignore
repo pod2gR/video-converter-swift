@@ -36,6 +36,3 @@ dist/
 
 # Misc
 *.iml
-
-# agent
-AGENTS.md
