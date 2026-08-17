@@ -206,14 +206,12 @@ struct SettingsView: View {
                     appState.progress.currentFileElapsed = 0
                 }
 
-                let outputFileName =
-                    videoFile.url.deletingPathExtension().lastPathComponent + ".mp4"
-                let outputURL: URL
-                if settings.outputSubdir, let outputDir = outputDir {
-                    outputURL = outputDir.appendingPathComponent(outputFileName)
-                } else {
-                    outputURL = videoFile.url.deletingPathExtension().appendingPathExtension("mp4")
-                }
+                guard let folder = appState.selectedFolder else { continue }
+                let outputURL = AppState.outputURL(
+                    for: videoFile.url,
+                    outputSubdir: settings.outputSubdir,
+                    baseFolder: folder
+                )
 
                 let startTime = Date()
 
@@ -262,8 +260,12 @@ struct SettingsView: View {
                                         appState.currentLog = log
                                     }
                                 } else {
-                                    // 编码失败 → 删除残缺输出文件
-                                    try? FileManager.default.removeItem(at: outputURL)
+                                    // 编码失败 → 删除残缺输出文件（仅当输出与源文件不同）
+                                    if outputURL.standardizedFileURL.path
+                                        != videoFile.url.standardizedFileURL.path
+                                    {
+                                        try? FileManager.default.removeItem(at: outputURL)
+                                    }
                                     appState.currentEncodingError = error ?? "Unknown error"
                                 }
                                 continuation.resume()

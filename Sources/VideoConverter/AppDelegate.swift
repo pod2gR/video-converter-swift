@@ -38,24 +38,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         // 如果正在转码，删除当前残缺输出文件（已完成的不受影响）
         if appState.isEncoding || appState.isPaused {
-            if let outputDir = resolveOutputDir(),
+            if let folder = appState.selectedFolder,
                 appState.progress.currentFileIndex < appState.videoFiles.count
             {
                 let videoFile = appState.videoFiles[appState.progress.currentFileIndex]
-                let outputFileName =
-                    videoFile.url.deletingPathExtension().lastPathComponent + ".mp4"
-                let outputURL = outputDir.appendingPathComponent(outputFileName)
-                try? FileManager.default.removeItem(at: outputURL)
+                let outputURL = AppState.outputURL(
+                    for: videoFile.url,
+                    outputSubdir: appState.settings.outputSubdir,
+                    baseFolder: folder
+                )
+                if outputURL.standardizedFileURL.path
+                    != videoFile.url.standardizedFileURL.path
+                {
+                    try? FileManager.default.removeItem(at: outputURL)
+                }
             }
         }
         return .terminateNow
-    }
-
-    private func resolveOutputDir() -> URL? {
-        guard let folder = appState.selectedFolder else { return nil }
-        return appState.settings.outputSubdir
-            ? folder.appendingPathComponent("new")
-            : folder
     }
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {

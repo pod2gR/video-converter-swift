@@ -187,6 +187,20 @@ class AppState: ObservableObject {
         !videoFiles.isEmpty
     }
 
+    /// 计算输出文件路径；确保输出与源文件不冲突（源文件已是 .mp4 且不输出到子目录时加后缀）
+    static func outputURL(for input: URL, outputSubdir: Bool, baseFolder: URL) -> URL {
+        let outputDir =
+            outputSubdir
+            ? baseFolder.appendingPathComponent("new")
+            : baseFolder
+        let baseName = input.deletingPathExtension().lastPathComponent
+        var url = outputDir.appendingPathComponent(baseName + ".mp4")
+        if url.standardizedFileURL.path == input.standardizedFileURL.path {
+            url = outputDir.appendingPathComponent(baseName + "_converted.mp4")
+        }
+        return url
+    }
+
     // MARK: - 防锁屏
 
     func preventSleep() {

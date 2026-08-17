@@ -127,6 +127,12 @@ final class FFmpegRunner: @unchecked Sendable {
         // 终止之前的进程（如果还在运行）
         currentProcess?.terminate()
 
+        // 防止输入输出路径相同导致 ffmpeg 报错，甚至后续清理误删源文件
+        if inputURL.standardizedFileURL.path == outputURL.standardizedFileURL.path {
+            completion(false, "输入与输出路径相同".localized)
+            return
+        }
+
         Task {
             // 提前检测音频编码和原视频时长
             let audioCodec = await detectAudioCodec(url: inputURL)

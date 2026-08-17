@@ -355,13 +355,20 @@ struct ProgressView: View {
 
     private func saveProgressAndStop() {
         // 删除当前残缺的输出文件
-        if let outputDir = resolveOutputDir(),
+        if let folder = appState.selectedFolder,
             appState.progress.currentFileIndex < appState.videoFiles.count
         {
             let videoFile = appState.videoFiles[appState.progress.currentFileIndex]
-            let outputFileName = videoFile.url.deletingPathExtension().lastPathComponent + ".mp4"
-            let outputURL = outputDir.appendingPathComponent(outputFileName)
-            try? FileManager.default.removeItem(at: outputURL)
+            let outputURL = AppState.outputURL(
+                for: videoFile.url,
+                outputSubdir: appState.settings.outputSubdir,
+                baseFolder: folder
+            )
+            if outputURL.standardizedFileURL.path
+                != videoFile.url.standardizedFileURL.path
+            {
+                try? FileManager.default.removeItem(at: outputURL)
+            }
         }
 
         // 弹出确认退出对话框
@@ -378,12 +385,6 @@ struct ProgressView: View {
         }
     }
 
-    private func resolveOutputDir() -> URL? {
-        guard let folder = appState.selectedFolder else { return nil }
-        return appState.settings.outputSubdir
-            ? folder.appendingPathComponent("new")
-            : folder
-    }
 }
 
 // MARK: - 暂停状态徽章
